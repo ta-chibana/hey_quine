@@ -8,8 +8,7 @@ eval$s=%w(
   rl.times { |r|
     l = (0..cl - 1).map { |c|
       n[c + r * cl]
-    }.join.tr('01', ' #')
+    }.join.tr('01', ''<<32<<'#');
+    puts(l)
   };
-
-  puts(s)
 )*""
