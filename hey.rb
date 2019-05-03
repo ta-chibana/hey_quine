@@ -19,9 +19,9 @@ eval$s=%w(
   };
   generator = create_generator.call;
 
-  n='d7g705ztp6fv4svae0st2ey5sgeukr4rcgub63x9t818mr5okjdyupyyuw9h5p9cpm0y3o98cln772vz9x3h2y2vdbv6ysboxwxid7osig6a1zwnikz4dd5qpwj8psu2cuvcom9aamyf4ae6twocsjqsqylgqb451r2jz91qeus4fxhc1uwhb42bxdsb6tkpsm6gwl58dsjiixt3sp2q5f72dboixbjxvzeyvtvc8pxuu7e9esrd6gfi8r2pvsbpuhbk2uhvdtd6qqi3aik8u59d92c45ago4maxosh709xncsccn2dvu2oh0hj88pjroor2kjjjf17m4iitqj5ucv9f71fqve4g1gjf45235u5jopv4hs1y15nrszx5zi5oq32max785s014dyqzc00m95xmqpb17kee76q4cc4o2okz8ehrfkul8zfd727'.to_i(36);
-  row_length=31;
-  column_length=74;
+  n='enojl1k11g20mj5381reqjpe01m9m82js0kstmb9i0s4gxg2iwa7ztdtbkdvjirms6rf4oig7dk8tcsb2qeufcre6zi3ij8cbnefywdlsshr61lnd96pvlri7mbhdcb1a33718j6rgau4c0lcilz53ms8vkpx5n7qehyq56r1twswzwq6rm4keahs70l2kyksaktgljjel8io7lcvexhjfm9afeom2ajt1h1o7mi08c0rvk7hfzb5ta5c73y0oe2p09vwp3uvprvp8dymi5bebekzy9wsz84ebksxfaaopj8dwc06flqd1wc5hlj03vaprvvq13z0cmmt505v4nm9v71tnwlaz134b239yqrne2kzroxca65mxb29e9fx456odd32bf0yfpbfx895ockoqpbje7s0fb3k9p8e9qmaw15b3788gjasps7xsenttpmn'.to_i(36);
+  row_length=29;
+  column_length=80;
   row_length.times { |y|
     line = (0..column_length - 1)
            .map { |c| n[c + y * column_length] }
