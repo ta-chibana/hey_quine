@@ -10,48 +10,42 @@ eval$s=%w(
   );
   code = n.to_i(36);
 
-  create_generator = -> {
-    start = 0;
-    pad_started = false;
-    sep_started = false;
+  st = 0;
+  ps = false;
+  ss = false;
 
-    ->(template) {
-      char_count = template.count('1');
-      t = -> {
-        head = s.slice(start..-1);
-        rest = start + char_count - s.length;
-        tail = s.slice(0, rest);
-        chars = (!pad_started && !sep_started) ? (head + '%' + 64.chr + tail[0..-3]).tap {
-          rest - 2; pad_started = true; sep_started = true;
-        } : head + tail;
-        template.split('').reduce('') { |a, c|
-          char = (c == '1') ? chars.slice!(0) : 32.chr;
-          a + char;
-        }.tap { start = rest };
-      };
-      f = -> {
-        chars = s.slice(start, char_count);
-        template.split('').reduce('') { |a, c|
-          char = (c == '1') ? (
-            (pad_started && !sep_started) ? (sep_started = true; 64.chr)
-                                          : chars.slice!(0);
-          ) : 32.chr;
-          a + char;
-        }.tap { start += char_count };
-      };
-      (start + char_count > s.length) ? t.call() : f.call()
+  gen = ->t {
+    cc = t.count('1');
+    ft = -> {
+      head = s.slice(st..-1);
+      rest = st + cc - s.length;
+      tail = s.slice(0, rest);
+      chars = (!ps && !ss) ? (head + '%' + 64.chr + tail[0..-3]).tap {
+        rest - 2; ps = true; ss = true
+      } : head + tail;
+      t.split('').reduce('') { |a, c|
+        char = (c == '1') ? chars.slice!(0) : 32.chr;
+        a + char;
+      }.tap { st = rest };
     };
+    ff = -> {
+      chars = s.slice(st, cc);
+      t.split('').reduce('') { |a, c|
+        char = (c == '1') ? (
+          (ps && !ss) ? (ss = true; 64.chr)
+                      : chars.slice!(0);
+        ) : 32.chr;
+        a + char;
+      }.tap { st += cc };
+    };
+    (st + cc > s.length) ? ft.call() : ff.call()
   };
-  generator = create_generator.call;
 
-  row_length = 29;
-  column_length = 80;
-  row_length.times { |y|
-    line = (0..column_length - 1)
-           .map { |x| code[x + y * column_length] }
-           .join;
-    new_line = generator.call(line);
-    print((y == row_length - 1) ? new_line.slice(0..-2) : new_line + "\n");
+  R = 29;
+  C = 80;
+  R.times { |y|
+    l = gen.call((0..C - 1).map { |x| code[x + y * C] }.join);
+    print((y == R - 1) ? l.slice(0..-2) : l + "\n");
   };
   puts(64.chr);
 )*"";
