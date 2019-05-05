@@ -1,3 +1,5 @@
+require 'json'
+
 # 88進数を用いる前提のスクリプト
 EXPECTED = %w(hey code for fun)
 
@@ -36,5 +38,4 @@ def source
 end
 
 encoded = encode(source)
-puts("encoded: #{encoded}")
-puts("decoded == source: #{decode(encoded) == source}")
+puts({ encoded: encoded, result: decode(encoded) == source }.to_json)
