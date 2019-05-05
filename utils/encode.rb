@@ -1,6 +1,15 @@
 require 'json'
 
-# 88進数を用いる前提のスクリプト
+# エンコード後の値に`()`を含めないようにするため,
+# 42 ~ 91, 93 ~ 126の文字を使う
+A = 42
+B = 91
+C = 93
+D = 126
+
+# 基数
+BASE = (A..B).to_a.length + (C..D).to_a.length
+
 EXPECTED = %w(hey code for fun)
 
 FILENAME = ARGV[0]
@@ -11,11 +20,11 @@ end
 def encode(n)
   ns = []
   while n > 0
-    ns << n % 88
-    n /= 88
+    ns << n % BASE
+    n /= BASE
   end
 
-  ns = ns.map { |n| (n + 55) % 89 + 38 }
+  ns = ns.map { |n| (n + C - A) % (D - A + 1) + A }
 
   ns.pack('C*').reverse
 end
@@ -23,7 +32,7 @@ end
 def decode(s)
   n = 0
   s.bytes do |m|
-    n = n * 88 + (m - 4) % 89
+    n = n * BASE + (m + D - A - C + 1) % (D - A + 1)
   end
   n
 end
@@ -38,4 +47,9 @@ def source
 end
 
 encoded = encode(source)
-puts({ encoded: encoded, result: decode(encoded) == source }.to_json)
+puts({
+  base: BASE,
+  decoder: "(m + #{D - A - C + 1}) % (#{D - A + 1})",
+  encoded: encoded,
+  result: decode(encoded) == source
+}.to_json)
