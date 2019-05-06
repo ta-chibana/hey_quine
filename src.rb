@@ -36,10 +36,10 @@ eval$s=%w(
       nst = st + cc;
     };
     (st + cc > s.size) ? ft.call() : ff.call();
+    st = nst;
     l.split('').reduce('') { |a, c|
-      char = (c == '1') ? cs.slice!(0) : 32.chr;
-      a + char
-    }.tap { st = nst }
+      a + ((c == '1') ? cs.slice!(0) : 32.chr)
+    }
   };
 
   R = 27;
@@ -49,7 +49,5 @@ eval$s=%w(
   R.times { |y|
     puts(g[(0..C - 1).map { |x| f[x + y * C] }.join]);
   };
-  2.times { puts(g[PAD]) };
-  print(g[PAD[0..-2]]);
-  puts(64.chr);
+  puts(g[PAD], g[PAD], g[PAD[0..-2]] + 64.chr);
 )*"";
