@@ -45,6 +45,7 @@ eval$s=%w(
   R = 27;
   C = 80;
   PAD = '1' * C;
+  print("\e[38;5;#{(0..231).to_a.sample}m");
   3.times { puts(g[PAD]) };
   R.times { |y|
     puts(g[(0..C - 1).map { |x| f[x + y * C] }.join]);
