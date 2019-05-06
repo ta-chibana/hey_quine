@@ -16,43 +16,40 @@ eval$s=%w(
 
   st = 0;
   ps = false;
-  ss = false;
 
-  gen = -> t {
-    cc = t.count('1');
+  g = -> l {
+    cc = l.count('1');
+    cs = '';
+    nst = 0;
     ft = -> {
-      head = s.slice(st..-1);
-      rest = st + cc - s.length;
-      tail = s.slice(0, rest);
-      chars = (!ps && !ss) ? (head + '%' + 64.chr + tail[0..-3]).tap {
-        rest - 2; ps = true; ss = true
-      } : head + tail;
-      t.split('').reduce('') { |a, c|
-        char = (c == '1') ? chars.slice!(0) : 32.chr;
-        a + char;
-      }.tap { st = rest };
+      h = s.slice(st..-1);
+      nst = st + cc - s.size;
+      if (!ps);
+        s = '%q' + 64.chr + s;
+        ps = true;
+      end;
+      t = s.slice(0, nst);
+      cs = h + t;
     };
     ff = -> {
-      chars = s.slice(st, cc);
-      t.split('').reduce('') { |a, c|
-        char = (c == '1') ? (
-          (ps && !ss) ? (ss = true; 64.chr)
-                      : chars.slice!(0);
-        ) : 32.chr;
-        a + char;
-      }.tap { st += cc };
+      cs = s.slice(st, cc);
+      nst = st + cc;
     };
-    (st + cc > s.length) ? ft.call() : ff.call()
+    (st + cc > s.size) ? ft.call() : ff.call();
+    l.split('').reduce('') { |a, c|
+      char = (c == '1') ? cs.slice!(0) : 32.chr;
+      a + char
+    }.tap { st = nst }
   };
 
   R = 27;
   C = 80;
   PAD = '1' * C;
-  3.times { puts(gen[PAD]) };
+  3.times { puts(g[PAD]) };
   R.times { |y|
-    puts(gen[(0..C - 1).map { |x| f[x + y * C] }.join]);
+    puts(g[(0..C - 1).map { |x| f[x + y * C] }.join]);
   };
-  2.times { puts(gen[PAD]) };
-  print(gen[PAD[0..-2]]);
+  2.times { puts(g[PAD]) };
+  print(g[PAD[0..-2]]);
   puts(64.chr);
 )*"";
