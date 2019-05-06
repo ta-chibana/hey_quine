@@ -39,7 +39,7 @@ end
 
 def source
   File
-    .read("./sources/#{FILENAME}.txt")
+    .read("./aa/#{FILENAME}.txt")
     .tr("\n", '')
     .reverse
     .gsub(/./, { ' ' => 0, '#' => 1 })
