@@ -50,4 +50,6 @@ eval$s=%w(
     puts(g[(0..C - 1).map { |x| f[x + y * C] }.join]);
   };
   puts(g[PAD], g[PAD], g[PAD[0..-2]] + 64.chr);
+  list = ['hey', 'code', 'for', 'fun'];
+  `say #{32.chr + list[i]}`;
 )*"";
